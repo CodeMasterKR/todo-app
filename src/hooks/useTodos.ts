@@ -1,0 +1,46 @@
+import { useEffect, useState } from "react"
+import type { FilterType, Todo } from "../types/todo"
+
+export const useTodos = () => {
+    const [todos, setTodos] = useState<Todo[]>(() => {
+        const saved = localStorage.getItem('todos')
+        return saved ? JSON.parse(saved) : []
+    }) 
+
+    const [filter, setFilter] = useState<FilterType>('all')
+
+    useEffect(() => {
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }, [todos])
+
+    const addTodo = (text: string) => {
+        const newTodo: Todo = {
+            id: crypto.randomUUID(),
+            text, 
+            completed: false,
+            createdAt: new Date()
+        }
+
+        setTodos(prev => [newTodo, ...prev])
+    }
+
+    const toggleTodo = (id: string) => {
+        setTodos(prev => {
+            return prev.map((todo) => {
+                return todo.id === id ? {...todo, competed: !todo.completed} : todo
+            })
+        })
+    }
+
+    const deleteTodo = (id: string) => {
+        setTodos(prev => prev.filter(todo => todo.id !== id))
+    }
+
+    const filteredTodos = todos.filter(todo => {
+        if(filter === 'active')  return !todo.completed
+        if(filter === 'completed')  return todo.completed
+        return true
+    })
+
+    return { filteredTodos, filter, setFilter, addTodo, toggleTodo, deleteTodo}
+}

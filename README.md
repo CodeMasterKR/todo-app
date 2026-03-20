@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -71,3 +72,7 @@ export default defineConfig([
   },
 ])
 ```
+=======
+# todo-app
+A simple and clean Todo app built with React, TypeScript, Vite, and Tailwind CSS
+>>>>>>> ab1396e520b5c0ccb116aa60912202ed25831f44
